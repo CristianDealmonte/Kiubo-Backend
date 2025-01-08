@@ -4,11 +4,13 @@
 // Importaciones de custom models
 import Usuario from "../models/Usuario.js"; // modelo de usuario
 import generarJWT from "../helpers/generarJWT.js"; // crear JWT
-import generarToken from "../helpers/generarToken.js";
+import generarToken from "../helpers/generarToken.js"; // crear token
+import emailRegistro from "../helpers/emailRegistro.js"; // envio de email
+import emailResetPassword from "../helpers/emailResetPassword.js"; // envio de email
 
 const registrar = async (req, res) => {
     // Tomar la info de la request
-    const { nombre, email } = req.body;
+    const { username, email } = req.body;
 
     // Prevenir usuarios duplicados
     const existeUsuario = await Usuario.findOne({email: email});
@@ -23,6 +25,7 @@ const registrar = async (req, res) => {
         const usuarioAlmacenado = await usuario.save();
         
         // Envia email de confirmación
+        emailRegistro({username: username, email: email, token: usuarioAlmacenado.token})
         
 
         // Respuesta a front
@@ -56,10 +59,10 @@ const confirmar = async (req, res) => {
         await usuarioConfirmar.save();
         // Respuesta al front
         res.status(200).json({'msg': 'Usuario confirmado correctamente'});
-    } catch (error) {
-        console.log(error); 
-        const err = new Error('Hubo un error al registrar a este usuario');
-        res.status(500).json({msg: err.message});
+    } catch (err) {
+        console.log(err); 
+        const error = new Error('Hubo un error al registrar a este usuario');
+        res.status(500).json({msg: error.message});
     }
 }
 
@@ -101,7 +104,7 @@ const cambiarPassword = async (req, res) => {
     const existeUsuario = await Usuario.findOne({email: email});
     if(!existeUsuario) {
         const error = new Error('El usuario no existe');
-        return res.status(404).json({msg: error.message});
+        return res.status(400).json({msg: error.message});
     }
 
     try {
@@ -112,6 +115,13 @@ const cambiarPassword = async (req, res) => {
         res.json({msg: 'Te hemos enviado un email con las instrucciones'});
     
         // Enviar email con instrucciones
+        emailResetPassword({
+            email: email, 
+            username: existeUsuario.username, 
+            token: existeUsuario.token
+        });
+
+
     } catch(error) {
         console.log(error.message);
     }
