@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 
 // Importacion de custom modules
 import generarToken from '../helpers/generarToken.js';
+ 
 
 // Crear esquema del documento
 const usuarioSchema = mongoose.Schema({

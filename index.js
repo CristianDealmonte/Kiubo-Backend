@@ -21,7 +21,7 @@ const app = express();
 connectarDB();
 
 // Solucion de CORS
-const dominiosPermitidos = ['http://localhost:5173']; // Lista de dominios admitidos para realizar peticiones a la api de backend
+const dominiosPermitidos = [process.env.FRONTEND_URL]; // Lista de dominios admitidos para realizar peticiones a la api de backend
 const corsOptions = { 
     origin: function(origin, callback) {
         if(dominiosPermitidos.indexOf(origin) !== -1) { // Si el origen se encuentra dentro de la lista de dominios permitidos admite la peticion
