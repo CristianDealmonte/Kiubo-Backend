@@ -10,8 +10,10 @@ import {
     autenticar,
     comprobarToken,
     cambiarPassword,
-    nuevoPassword
-} from '../controllers/UsuarioController.js'
+    nuevoPassword,
+    perfil,
+} from '../controllers/UsuarioController.js';
+import Authenticate from '../middleware/authenticate.js';
 
 
 
@@ -29,6 +31,6 @@ router.route('/reset-password/:token')
 
 
 // Rutas de dominio privado
-
+router.get('/perfil', Authenticate, perfil);
 
 export default router;
