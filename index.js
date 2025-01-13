@@ -9,7 +9,10 @@ import cors from 'cors';
 
 // Importaciones de custom modules
 import connectarDB from './config/db.js'; // Base de datos
-import userRoutes from './routes/usuarioRoutes.js'; //
+import authRoutes from './routes/authRoutes.js'; // Rutas de autenticacion
+import mensajesRoutes from './routes/mensajesRoutes.js'; // Rutas de autenticacion
+import userRoutes from './routes/usuarioRoutes.js';
+
 
 // Definir la configuracion de variables de entorno
 dotenv.config(); 
@@ -38,9 +41,11 @@ app.use(cors(corsOptions));
 app.use(express.json()); 
 
 // Enrutamiento
-app.use('/api/users', userRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/message', mensajesRoutes);
+app.use('/api/user', userRoutes);
 
-// Asignacion de puerto al servidor
+// Asignacion de puerto al servidor 
 const PORT = process.env.PORT || 4000;
 
 // Iniciar el servidor
