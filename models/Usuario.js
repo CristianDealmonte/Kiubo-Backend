@@ -31,8 +31,18 @@ const usuarioSchema = mongoose.Schema({
     confirmado: {
         type: Boolean, 
         default: false 
-    }
-});
+    },
+    Descripcion:{
+        type: String,
+        default: "",
+    },
+    profilePicture: {
+        type: String,
+        default: "",
+    },
+
+
+}, {timestamps: true});
  
 // Hasea el password antes de almacenarlo en la DB
 usuarioSchema.pre('save', async function(next) {
