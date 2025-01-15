@@ -1,9 +1,9 @@
 // Importacion de dependencias
 
 
-
 // Importacion de custom modules
 import Usuario from "../models/Usuario.js";
+import multer from 'multer';
 
  
 const obtenerUltimosChats = async (req, res, next) => {
@@ -24,7 +24,33 @@ const obtenerUltimosChats = async (req, res, next) => {
 
 
 
+// Configuración de almacenamiento para multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './media'); // Carpeta donde se guardarán las imágenes
+    },
+    filename: (req, file, cb) => {
+        const ext = file.originalname.split('.').pop(); // Obtener extensión del archivo
+        cb(null, `${Date.now()}.${ext}`); // Generar nombre único
+    }
+});
+
+// Instancia de multer configurada
+const upload = multer({ storage });
+
+// Controlador para manejar la subida de imágenes
+export const uploadImage = (req, res) => {
+    if (!req.file) {
+        return res.status(400).send({ error: 'No se ha subido ninguna imagen.' });
+    }
+    res.send({ data: 'Imagen cargada correctamente', file: req.file });
+};
+
+// Exportar multer para usarlo en la ruta
+export const uploadMiddleware = upload.single('imagenPerfil');
+
+
 
 export {
-    obtenerUltimosChats
+    obtenerUltimosChats,
 }
