@@ -70,11 +70,30 @@ const enviarMensaje = async (req, res) => {
             mensajeNuevo.save()
         ]);
 
+
+
+
+        
+
+
+
+
         // Socket
         const receiverSocketId = getReceiverSocketId(receptor);
-        if(receiverSocketId === receptor) {
+        const senderSocketId = getReceiverSocketId(emisor);
+        console.log(receiverSocketId);
+        console.log(senderSocketId);
+
+
+        if(receiverSocketId) {
+            
             io.to(receiverSocketId).emit('newMessage', mensajeNuevo)
         }
+
+
+        // if (receiverSocketId && io.sockets.sockets.has(receiverSocketId)) {
+        //     io.to(receiverSocketId).emit('newMessage', mensajeNuevo);
+        // }
 
 
         return res.status(201).json(mensajeNuevo)
@@ -82,7 +101,6 @@ const enviarMensaje = async (req, res) => {
         
     } catch (err) {
         console.log(err);
-        console.log('hola')
         const error = new Error('No se encontro el usuario'); 
         return res.status(403).json({msg: error.msg});
     };
