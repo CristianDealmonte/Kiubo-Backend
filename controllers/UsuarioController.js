@@ -13,13 +13,16 @@ const obtenerUltimosChats = async (req, res, next) => {
         const usuario = req.usuario._id;
         
         // Extrae de la DB todos los usuarios excepto el que concuerde con el id del usuario
-        const allUsers = await Usuario.find({_id: { $ne: usuario}}).select('-password -token -confirmado');
+        const allUsers = await Usuario.find({_id: { $ne: usuario}}).select('-password -token -confirmado -__v');
           
         return res.status(200).json(allUsers);
     } catch (error) {
         console.log(error)
     }
 };
+
+
+
 
 
 export {

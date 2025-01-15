@@ -69,7 +69,7 @@ const enviarMensaje = async (req, res) => {
             mensajeNuevo.save()
         ]);
 
-        return res.status(201).json({mensajeNuevo})
+        return res.status(201).json(mensajeNuevo)
 
         
     } catch (err) {
