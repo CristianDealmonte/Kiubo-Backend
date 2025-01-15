@@ -72,7 +72,7 @@ const enviarMensaje = async (req, res) => {
 
         // Socket
         const receiverSocketId = getReceiverSocketId(receptor);
-        if(receiverSocketId) {
+        if(receiverSocketId === receptor) {
             io.to(receiverSocketId).emit('newMessage', mensajeNuevo)
         }
 
@@ -93,3 +93,11 @@ export {
     obtenerMensajes,
     enviarMensaje
 };
+
+
+
+
+
+
+
+     
