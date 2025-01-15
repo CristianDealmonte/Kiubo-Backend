@@ -6,19 +6,18 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 
-
 // Importaciones de custom modules
+import { app, server } from './socket/socket.js';
 import connectarDB from './config/db.js'; // Base de datos
 import authRoutes from './routes/authRoutes.js'; // Rutas de autenticacion
 import mensajesRoutes from './routes/mensajesRoutes.js'; // Rutas de autenticacion
 import userRoutes from './routes/usuarioRoutes.js';
 
 
+
 // Definir la configuracion de variables de entorno
 dotenv.config(); 
 
-// creanco instancia de express
-const app = express();
 
 // Conexion a la base de datos
 connectarDB();
@@ -49,6 +48,6 @@ app.use('/api/user', userRoutes);
 const PORT = process.env.PORT || 4000;
 
 // Iniciar el servidor
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Servidor funcionando en el puerto http://localhost:${PORT}`);
 })

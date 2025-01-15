@@ -1,9 +1,10 @@
 // Importacion de dependencias
 
-
 // Importacion de custom models
 import Chat from '../models/Chat.js' // Modelo de conversacion
 import Mensaje from '../models/Mensaje.js'; // Modelo de mensaje
+import { getReceiverSocketId } from '../socket/socket.js';
+import { io } from '../socket/socket.js'
 
 const obtenerMensajes = async (req, res) => {
     // Extraer el ID del usuario con el que se quiere chatear de la URL
@@ -68,6 +69,13 @@ const enviarMensaje = async (req, res) => {
             chat.save(), 
             mensajeNuevo.save()
         ]);
+
+        // Socket
+        const receiverSocketId = getReceiverSocketId(receptor);
+        if(receiverSocketId) {
+            io.to(receiverSocketId).emit('newMessage', mensajeNuevo)
+        }
+
 
         return res.status(201).json(mensajeNuevo)
 
