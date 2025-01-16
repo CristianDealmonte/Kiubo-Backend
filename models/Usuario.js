@@ -39,6 +39,10 @@ const usuarioSchema = mongoose.Schema({
     profilePicture: {
         type: String,
         default: "",
+    },    
+    bannerImg: {
+        type: String,
+        default: "",
     },
 
 
