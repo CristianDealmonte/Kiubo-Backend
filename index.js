@@ -41,7 +41,9 @@ app.use(cors(corsOptions));
 // Indicar como leer las peticiones
 app.use(express.json()); 
 
-// Enrutamiento
+
+
+// Enrutamiento 
 app.use('/api/auth', authRoutes);
 app.use('/api/message', mensajesRoutes);
 app.use('/api/user', userRoutes);
