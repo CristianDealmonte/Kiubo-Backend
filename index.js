@@ -38,7 +38,7 @@ const corsOptions = {
 }
 app.use(cors(corsOptions));
 
-// Indicar como leer las peticiones
+// Indicar como leer las peticiones 
 app.use(express.json()); 
 
 
