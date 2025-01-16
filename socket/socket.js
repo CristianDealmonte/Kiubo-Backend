@@ -16,13 +16,10 @@ const io = new Server(server, {
 });
 
 
-//
+// obtener lista de todos los usuarios activos
 export const getReceiverSocketId = (receiverId) => {
     return userSocketMap[receiverId];
 }
-
-
-
 
 const userSocketMap = {}; // {userId: socketId}
 

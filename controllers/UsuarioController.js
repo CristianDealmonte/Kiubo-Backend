@@ -5,6 +5,7 @@
 // Importacion de custom modules
 import Usuario from "../models/Usuario.js";
 
+
  
 const obtenerUltimosChats = async (req, res, next) => {
 
@@ -23,8 +24,22 @@ const obtenerUltimosChats = async (req, res, next) => {
 
 
 
+// Controlador 
+const actualizarFotoPerfil = (req, res) => {
+
+    
+    if(!req.file) {
+        return res.status(400).json({msg: 'no se subio ningun archivo'});
+    }
+    res.sendStatus(200);
+};
+
+
+
+
 
 
 export {
-    obtenerUltimosChats
+    obtenerUltimosChats,
+    actualizarFotoPerfil,
 }

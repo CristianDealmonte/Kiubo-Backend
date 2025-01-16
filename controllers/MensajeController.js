@@ -70,31 +70,15 @@ const enviarMensaje = async (req, res) => {
             mensajeNuevo.save()
         ]);
 
-
-
-
-        
-
-
-
-
         // Socket
         const receiverSocketId = getReceiverSocketId(receptor);
-        const senderSocketId = getReceiverSocketId(emisor);
-        console.log(receiverSocketId);
-        console.log(senderSocketId);
 
+        // Extraer mensaje guardado
+        // const mensajeAlmacenado = await Mensaje.findById(mensajeNuevo._id);
 
         if(receiverSocketId) {
-            
             io.to(receiverSocketId).emit('newMessage', mensajeNuevo)
         }
-
-
-        // if (receiverSocketId && io.sockets.sockets.has(receiverSocketId)) {
-        //     io.to(receiverSocketId).emit('newMessage', mensajeNuevo);
-        // }
-
 
         return res.status(201).json(mensajeNuevo)
 
