@@ -32,17 +32,17 @@ const usuarioSchema = mongoose.Schema({
         type: Boolean, 
         default: false 
     },
-    Descripcion:{
+    descripcion:{
         type: String,
-        default: "",
+        default: "Comparte una descripcion acerca de ti",
     },
     profilePicture: {
         type: String,
-        default: "",
+        default: `IconoAnimal.png`,
     },    
     bannerImg: {
         type: String,
-        default: "",
+        default: 'bannerDefault.jpg',
     },
 
 

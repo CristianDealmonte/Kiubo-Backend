@@ -1,5 +1,5 @@
 // Importacion de dependencias
-
+import dotenv from 'dotenv';
 
 // Importacion de custom modules
 import Usuario from "../models/Usuario.js";
@@ -23,48 +23,37 @@ const obtenerUltimosChats = async (req, res, next) => {
 };
 
 
-
-// Controlador 
-const actualizarFotoPerfil = (req, res) => {
-    
-    if(!req.file) {
-        return res.status(400).json({msg: 'no se subio ningun archivo'});
-    }
-    res.sendStatus(200);
-};
-
-
-
-
-
-// Configuración de almacenamiento para multer
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, './media'); // Carpeta donde se guardarán las imágenes
-    },
-    filename: (req, file, cb) => {
-        const ext = file.originalname.split('.').pop(); // Obtener extensión del archivo
-        cb(null, `${Date.now()}.${ext}`); // Generar nombre único
-    }
-});
-
-// Instancia de multer configurada
-const upload = multer({ storage });
-
 // Controlador para manejar la subida de imágenes
-export const uploadImage = (req, res) => {
+const editarUsuario = async (req, res) => {
+
+    // Extrae el usuario de la DB
+    const usuario = await Usuario.findById(req.usuario._id).select('-password -token -confirmado -email -createdAt -updatedAt -__v');
+
+    // Verifica que se haya subido una imagen
     if (!req.file) {
         return res.status(400).send({ error: 'No se ha subido ninguna imagen.' });
     }
-    res.send({ data: 'Imagen cargada correctamente', file: req.file });
+
+
+    // Realiza cambios
+    // usuario.descripcion = req.body.descripcion || usuario.descripcion;
+    // usuario.profilePicture = req.file.filename || usuario.profilePicture;
+    usuario.bannerImg = req.file.filename || usuario.bannerImg;
+
+    // Guarda cambios en DB
+    await usuario.save(); 
+
+    res.json({ 
+        data: 'Imagen cargada correctamente', 
+        file: req.file,
+        usuario: usuario
+    });
 };
 
-// Exportar multer para usarlo en la ruta
-export const uploadMiddleware = upload.single('imagenPerfil');
 
 
 
 export {
     obtenerUltimosChats,
-    actualizarFotoPerfil,
+    editarUsuario
 }

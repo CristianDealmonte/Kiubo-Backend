@@ -13,8 +13,8 @@ const MulterUpload = multer({
             const fileExtension = extname(file.originalname);
             const filename = file.originalname.split(fileExtension)[0];
 
-            // devolvemos una imagen con nombre unico
-            cb(null, `${filename}-${generarToken()}${fileExtension}`)
+            // devolvemos una imagen con nombre unico 
+            cb(null, `${generarToken()}${fileExtension}`)
         }
     }),
     fileFilter: (req, file, cb) => {

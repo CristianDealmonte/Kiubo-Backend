@@ -17,7 +17,7 @@ const Authenticate = async (req, res, next) => {
         
         try {
             // Separa el JWT de la palabra Bearer
-            token = req.headers.authorization.split(' ')[1];
+            token = req.headers.authorization.split(' ')[1]; 
 
             // decodifica el JWT
             const decoded = JWT.verify(token, process.env.JWT_SECRET);
